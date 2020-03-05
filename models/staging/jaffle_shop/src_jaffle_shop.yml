@@ -1,0 +1,34 @@
+version: 2
+
+sources:
+
+    -   name: jaffle_shop
+        database: raw
+    
+        freshness:
+            warn_after: {count: 12, period: hour}
+            error_after: {count: 24, period: hour}
+
+        tables:
+            -   name: customers
+                loaded_at_field: current_timestamp
+                columns:
+                -   name: id
+                    tests:
+                        -   unique
+                        -   not_null
+
+            -   name: orders
+                loaded_at_field: current_timestamp
+                columns:
+                -   name: id
+                    tests:
+                        -   unique
+                        -   not_null
+                -   name: status
+                    tests:
+                        -   accepted_values:
+                                values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']          
+
+
+        
