@@ -6,4 +6,4 @@ select
     , amount/100 as amount
     , created as created
     
-from source('stripe','payment')
+from {{ source('stripe','payment') }}
